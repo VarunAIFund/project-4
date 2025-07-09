@@ -48,14 +48,22 @@ cd project-4
 cd backend
 
 # Install Python dependencies
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 
 # Create environment file
 cp .env.example .env
 
 # Add your OpenAI API key to .env
-echo "OPENAI_API_KEY=your_api_key_here" > .env
+# Edit the .env file and replace 'your_openai_api_key_here' with your actual API key
+# IMPORTANT: Never commit the .env file with your real API key!
 ```
+
+## ⚠️ Security Note
+
+- **Never commit your `.env` file** - it contains your API key
+- The `.gitignore` file is configured to prevent accidental commits of sensitive data
+- Keep your OpenAI API key secure and never share it publicly
+- The `.env.example` file is safe to commit as it doesn't contain real keys
 
 ### 3. Frontend Setup
 
