@@ -4,6 +4,7 @@ A local development application that converts MP4 video files into PowerPoint pr
 
 ## Features
 
+### Core Functionality
 - **Upload MP4 Videos**: Drag & drop interface for video file uploads
 - **Audio Extraction**: Automatically extracts audio from video files
 - **Speech-to-Text**: Uses OpenAI Whisper for accurate transcription
@@ -11,6 +12,15 @@ A local development application that converts MP4 video files into PowerPoint pr
 - **PowerPoint Export**: Creates downloadable .pptx files
 - **Real-time Progress**: Live tracking of processing stages
 - **Transcript Preview**: Review transcript before slide generation
+
+### Professional Design System
+- **4 Professional Themes**: Corporate Blue, Modern Green, Elegant Purple, Professional Gray
+- **Visual Theme Selection**: Interactive theme picker with color previews
+- **Enhanced Typography**: Professional fonts (Calibri), proper hierarchy, and spacing
+- **Slide Numbers & Footers**: Page numbers and presentation titles on every slide
+- **Decorative Elements**: Accent lines, shapes, and visual polish
+- **Better Formatting**: Improved bullet points, consistent spacing, and alignment
+- **Theme-Based Styling**: Consistent colors, backgrounds, and visual elements
 
 ## Tech Stack
 
@@ -99,23 +109,74 @@ Frontend will run on `http://localhost:3000`
 1. **Upload Video**: Drag & drop an MP4 file or click to select
 2. **Process Audio**: Click "Process Audio" to extract and transcribe
 3. **Review Transcript**: Preview the generated transcript
-4. **Generate Slides**: Click "Generate Slides" to create presentation
-5. **Download**: Click "Download PowerPoint" to get your .pptx file
+4. **Choose Theme**: Select from 4 professional color themes with visual previews
+5. **Generate Slides**: Click "Generate Slides" to create presentation with selected theme
+6. **Download**: Click "Download PowerPoint" to get your professionally designed .pptx file
 
 ## API Endpoints
 
 - `POST /upload` - Upload MP4 file
 - `GET /status/{job_id}` - Check processing status
 - `GET /transcript/{job_id}` - Get transcript
-- `POST /generate-slides/{job_id}` - Generate slides
+- `GET /themes` - Get available presentation themes
+- `POST /generate-slides/{job_id}?theme={theme_name}` - Generate slides with selected theme
 - `GET /download/{job_id}` - Download PowerPoint
+
+## Professional Slide Design
+
+### Available Themes
+
+1. **Corporate Blue** - Professional business presentations
+   - Primary: Deep blue (#197AD2)
+   - Background: Light blue (#F0F8FF)
+   - Accent: Teal (#009688)
+   - Use case: Business meetings, corporate reports
+
+2. **Modern Green** - Fresh, contemporary look
+   - Primary: Modern green (#4CAF50)
+   - Background: Light green (#F8FFF8)
+   - Accent: Orange (#FF9800)
+   - Use case: Tech presentations, startups, innovation
+
+3. **Elegant Purple** - Sophisticated and creative
+   - Primary: Elegant purple (#9C27B0)
+   - Background: Light purple (#FAF5FF)
+   - Accent: Gold (#FFC107)
+   - Use case: Creative presentations, design reviews
+
+4. **Professional Gray** - Clean, minimal aesthetic
+   - Primary: Blue-gray (#607D8B)
+   - Background: Light gray (#FAFAFA)
+   - Accent: Orange (#FF5722)
+   - Use case: Academic presentations, reports
+
+### Design Features
+
+- **Typography**: Professional Calibri font with proper hierarchy
+  - Title slides: 36pt bold titles
+  - Content slides: 28pt slide titles, 18pt content
+- **Slide Numbers**: Bottom-right corner with "current/total" format
+- **Footers**: Presentation title in bottom-left (except title slide)
+- **Decorative Elements**: 
+  - Accent lines under content slide titles
+  - Decorative accent bar on title slide
+- **Consistent Spacing**: Professional margins and bullet point spacing
+- **Theme Colors**: All elements styled with consistent theme colors
+
+### Theme Selection
+
+The frontend provides a visual theme picker where you can:
+- Preview color swatches for each theme
+- See primary, secondary, and accent colors
+- Click to select your preferred theme
+- Generate slides with your chosen design
 
 ## File Structure
 
 ```
 project-4/
 ├── backend/
-│   ├── main.py              # FastAPI application
+│   ├── main.py              # FastAPI application with theme system
 │   ├── requirements.txt     # Python dependencies
 │   ├── .env.example        # Environment template
 │   └── temp/               # Temporary file storage
@@ -123,7 +184,7 @@ project-4/
 │       └── outputs/        # Generated presentations
 ├── frontend/
 │   ├── src/
-│   │   ├── App.jsx         # Main React component
+│   │   ├── App.jsx         # Main React component with theme selection
 │   │   ├── main.jsx        # React entry point
 │   │   └── index.css       # Tailwind CSS
 │   ├── package.json        # Node dependencies
@@ -155,7 +216,7 @@ Make sure all required packages are installed:
 
 ```bash
 # Backend
-pip install fastapi uvicorn python-multipart python-pptx moviepy openai openai-whisper
+pip3 install fastapi uvicorn python-multipart python-pptx moviepy openai openai-whisper python-dotenv
 
 # Frontend
 npm install react react-dom axios react-dropzone
@@ -169,5 +230,18 @@ This application is optimized for local development with:
 - Console debugging
 - No security overhead
 - Quick iteration cycles
+- Professional presentation output
+- Theme system for design customization
 
-Perfect for testing, prototyping, and local content creation workflows.# project-4
+Perfect for testing, prototyping, and local content creation workflows that require professional-quality presentations.
+
+## Output Quality
+
+The generated PowerPoint presentations feature:
+- **Professional Design**: Business-ready slides with consistent styling
+- **Multiple Themes**: Choose from 4 carefully crafted color schemes
+- **Typography**: Proper font hierarchy and spacing
+- **Visual Polish**: Slide numbers, footers, and decorative elements
+- **Consistent Branding**: Theme-based colors throughout all slides
+
+Transform your audio content into presentation-ready slides that look professionally designed!
