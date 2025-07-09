@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { useDropzone } from 'react-dropzone'
 import axios from 'axios'
 
@@ -12,6 +12,21 @@ function App() {
   const [slideContent, setSlideContent] = useState(null)
   const [error, setError] = useState('')
   const [uploading, setUploading] = useState(false)
+  const [themes, setThemes] = useState({})
+  const [selectedTheme, setSelectedTheme] = useState('corporate_blue')
+
+  // Load themes on component mount
+  useEffect(() => {
+    const loadThemes = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/themes`)
+        setThemes(response.data.themes)
+      } catch (err) {
+        console.error('Failed to load themes:', err)
+      }
+    }
+    loadThemes()
+  }, [])
 
   const onDrop = useCallback(async (acceptedFiles) => {
     const file = acceptedFiles[0]
@@ -102,7 +117,7 @@ function App() {
     if (!jobId) return
 
     try {
-      const response = await axios.post(`${API_BASE_URL}/generate-slides/${jobId}`)
+      const response = await axios.post(`${API_BASE_URL}/generate-slides/${jobId}?theme=${selectedTheme}`)
       
       setSlideContent(response.data.slide_content)
       setStatus('completed')
@@ -219,6 +234,48 @@ function App() {
               {status.replace('_', ' ')}
               {uploading && '...'}
             </p>
+          </div>
+        )}
+
+        {/* Theme Selection */}
+        {status === 'transcript_ready' && Object.keys(themes).length > 0 && (
+          <div className="mb-8 p-6 bg-white rounded-lg shadow">
+            <h3 className="text-lg font-semibold mb-4">Choose Presentation Theme</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {Object.entries(themes).map(([themeId, theme]) => (
+                <div
+                  key={themeId}
+                  onClick={() => setSelectedTheme(themeId)}
+                  className={`p-3 rounded-lg border-2 cursor-pointer transition-all hover:shadow-md ${
+                    selectedTheme === themeId 
+                      ? 'border-blue-500 bg-blue-50' 
+                      : 'border-gray-200 hover:border-gray-300'
+                  }`}
+                >
+                  <div className="mb-2">
+                    <div className="flex space-x-1 mb-1">
+                      <div 
+                        className="w-4 h-4 rounded-full" 
+                        style={{ backgroundColor: theme.colors.primary }}
+                      ></div>
+                      <div 
+                        className="w-4 h-4 rounded-full" 
+                        style={{ backgroundColor: theme.colors.secondary }}
+                      ></div>
+                      <div 
+                        className="w-4 h-4 rounded-full" 
+                        style={{ backgroundColor: theme.colors.accent }}
+                      ></div>
+                    </div>
+                    <div 
+                      className="w-full h-2 rounded" 
+                      style={{ backgroundColor: theme.colors.background }}
+                    ></div>
+                  </div>
+                  <p className="text-sm font-medium text-gray-700">{theme.name}</p>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
